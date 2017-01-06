@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MyFirstOpenCV.xcodeproj">
+      location = "self:/Users/haocong/workspace/MyFirstOpenCV/MyFirstOpenCV.xcodeproj">
    </FileRef>
 </Workspace>

@@ -11,24 +11,62 @@
 using namespace std;
 using namespace cv;
 
-int main()
+int shape(int argc, char** argv)
 {
-    Mat img_1 = imread("/Users/haocong/Desktop/colorFiltered/4.jpg", 0);
-//    Mat f;
-    Mat img_2 = imread("/Users/haocong/Desktop/colorFiltered/8.jpg", 0);
-//    Mat f1;
-//    threshold(k,f,50,255,THRESH_BINARY);//对图像进行二值化
+    Mat img_1 = imread("/Users/haocong/Desktop/colorFiltered/red_sample.jpg", 0);
+    Mat img_2 = imread("/Users/haocong/Desktop/colorFiltered/red_rotate.jpg", 0);
+    
+//    threshold(k,f,50,255,THRESH_BINARY); //对图像进行二值化
 //    threshold(k1,f1,50,255,THRESH_BINARY);
+    
     Mat closerect = getStructuringElement(MORPH_RECT, Size(3,3)); //进行结构算子生成
+    
     morphologyEx(img_1, img_1, MORPH_OPEN, closerect);
-    morphologyEx(img_2, img_2, MORPH_OPEN, closerect);//进行形态学开运算
-//    Mat dst = Mat::zeros(img_1.rows, img_1.cols, CV_8UC3);
-//    Mat dst1 = Mat::zeros(img_2.rows, img_2.cols, CV_8UC3);
-    vector<vector<Point>> w, w1;
-    vector<Vec4i> hierarchy, hierarchy1;
-    findContours(img_1, w, hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE);//提取轮廓元素
-    findContours(img_2, w1,hierarchy1, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
-    double ffff = matchShapes(w[0], w1[0], CV_CONTOURS_MATCH_I3, 1.0);//进行轮廓匹配
-    cout << ffff << endl;
+    morphologyEx(img_2, img_2, MORPH_OPEN, closerect); //进行形态学运算
+
+    vector<vector<Point>> contours_1, contours_2;
+    vector<Vec4i> hierarchy1, hierarchy2;
+    
+    findContours(img_1, contours_1, hierarchy1, RETR_CCOMP, CHAIN_APPROX_NONE); //提取轮廓元素
+    findContours(img_2, contours_2, hierarchy2, RETR_CCOMP, CHAIN_APPROX_NONE);
+    
+    Mat result(img_1.size(), CV_8U, Scalar(0));
+    drawContours(result, contours_1, -1, Scalar(255), 2);
+    namedWindow("FullScreen",CV_WINDOW_NORMAL);
+    imshow("FullScreen", img_1);
+    
+    double area_1 = 0.0;
+    double area_2 = 0.0;
+    
+    auto itr = contours_1.begin();
+    while(itr != contours_1.end())
+    {
+        area_1 += contourArea(*itr);
+        ++itr;
+    }
+    
+    itr = contours_2.begin();
+    while(itr != contours_2.end())
+    {
+        area_2 += contourArea(*itr);
+        ++itr;
+    }
+    
+//    double similarity = 0.0;
+//    int i = 0;
+//    
+//    while(i != contours_1.size() || i != contours_2.size())
+//    {
+//        similarity += matchShapes(contours_1[i], contours_2[i], CV_CONTOURS_MATCH_I3, 1.0);
+//        ++i;
+//    }
+    
+//    double similarity = matchShapes(contours_1[0], contours_2[0], CV_CONTOURS_MATCH_I3, 1.0); //进行轮廓匹配
+    
+    cout << area_1 << ", " << area_2 << ", " << area_2 / area_1 << endl;
+//    cout << similarity << endl;
+    
+    waitKey(0);
+
     return 0;
 }
