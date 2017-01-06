@@ -9,7 +9,6 @@
 #include <iostream>
 #include <fstream>
 #include <opencv2/opencv.hpp>
-#include <unordered_map>
 #include <algorithm>
 #include "json.hpp"
 
@@ -51,6 +50,8 @@ int main(int argc, char** argv)
     
     if(bestSim.second > 0.85) {
         cout << bestSim.first << endl;
+    } else {
+        cout << "nomatch" << endl;
     }
     return 0;
 }
