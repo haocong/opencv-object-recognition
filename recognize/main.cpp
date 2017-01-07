@@ -25,11 +25,11 @@ bool descend(pair<string, double> a, pair<string, double> b) {
 
 int main(int argc, char** argv)
 {
-    ifstream i("/Users/haocong/Desktop/config.json");
+    ifstream i("config.json");
     json config;
     i >> config;
     
-    Mat img = imread("/Users/haocong/Desktop/sample/15.jpg");
+    Mat img = imread("6.jpg");
     Mat imgThreshold;
     
     vector<pair<string, double>> sims;
