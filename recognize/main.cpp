@@ -25,33 +25,62 @@ bool descend(pair<string, double> a, pair<string, double> b) {
 
 int main(int argc, char** argv)
 {
-    ifstream i("config.json");
+    VideoCapture cap(1); //capture the video from web cam
+    
+    if (!cap.isOpened())  // if not success, exit program
+    {
+        cout << "Cannot open the web cam" << endl;
+        return -1;
+    }
+    
+    
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, 640.0);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480.0);
+    cap.set(CV_CAP_PROP_FPS, 30.0);
+    cap.set(CV_CAP_PROP_EXPOSURE, 0.1);
+    
+    ifstream i("./config.json");
     json config;
     i >> config;
     
-    Mat img = imread("6.jpg");
-    Mat imgThreshold;
-    
-    vector<pair<string, double>> sims;
-    
-    for (json::iterator it = config.begin(); it != config.end(); ++it) {
-        json color = *it;
-        vector<int> vec = color["range"].get<vector<int>>();
-        imgThreshold = GetThreshold(img, vec);
-        double area = calcArea(imgThreshold);
-        double similarity = area / color["area"].get<double>();
-//        cout << it.key() << ": " << similarity << endl;
-        sims.push_back(make_pair(it.key(), similarity));
+    while (true) {
+        Mat img;
+        Mat imgThreshold;
+        
+        bool bSuccess = cap.read(img); // read a new frame from video
+        
+        if (!bSuccess) //if not success, break loop
+        {
+            cout << "Cannot read a frame from video stream" << endl;
+            break;
+        }
+        
+        vector<pair<string, double>> sims;
+        
+        for (json::iterator it = config.begin(); it != config.end(); ++it) {
+            json color = *it;
+            vector<int> vec = color["range"].get<vector<int>>();
+            imgThreshold = GetThreshold(img, vec);
+            double area = calcArea(imgThreshold);
+            double similarity = area / color["area"].get<double>();
+            //        cout << it.key() << ": " << similarity << endl;
+            sims.push_back(make_pair(it.key(), similarity));
+        }
+        
+        imshow("Image", img);
+        
+        sort(sims.begin(), sims.end(), descend);
+        pair<string, double> bestSim = sims[0];
+        //    cout << bestSim.first << ": " << bestSim.second << endl;
+        
+        if(bestSim.second > 0.85) {
+            cout << bestSim.first << " " << bestSim.second << endl;
+        } else {
+            cout << "nomatch " << bestSim.first << " " << bestSim.second << endl;
+        }
+        
+        waitKey(33);
     }
     
-    sort(sims.begin(), sims.end(), descend);
-    pair<string, double> bestSim = sims[0];
-//    cout << bestSim.first << ": " << bestSim.second << endl;
-    
-    if(bestSim.second > 0.85) {
-        cout << bestSim.first << endl;
-    } else {
-        cout << "nomatch" << endl;
-    }
     return 0;
 }
