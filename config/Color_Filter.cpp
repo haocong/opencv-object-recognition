@@ -1,5 +1,5 @@
 //
-//  main.cpp
+//  Color_Filter.cpp
 //  config
 //
 //  Created by haocong on 2017/1/7.
@@ -19,7 +19,7 @@ using namespace nlohmann;
 
 double calcArea(Mat&);
 
-int main(int argc, char** argv)
+int filter(int argc, char** argv)
 {
     VideoCapture cap(1); //capture the video from web cam
 
@@ -65,15 +65,16 @@ int main(int argc, char** argv)
     
     while (loop)
     {
-        Mat imgOriginal = imread("/Users/haocong/Desktop/sample/5.jpg");
+        Mat imgOriginal;
+//        imgOriginal = imread("/Users/haocong/Desktop/sample/5.jpg");
         
-//        bool bSuccess = cap.read(imgOriginal); // read a new frame from video
-//
-//        if (!bSuccess) //if not success, break loop
-//        {
-//            cout << "Cannot read a frame from video stream" << endl;
-//            break;
-//        }
+        bool bSuccess = cap.read(imgOriginal); // read a new frame from video
+
+        if (!bSuccess) //if not success, break loop
+        {
+            cout << "Cannot read a frame from video stream" << endl;
+            break;
+        }
         
         cout << "H: " << iLowH << ", " << iHighH << endl;
         cout << "S: " << iLowS << ", " << iHighS << endl;
@@ -83,7 +84,7 @@ int main(int argc, char** argv)
         
         cvtColor(imgOriginal, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
         
-        Mat imgThresholded, temp;
+        Mat imgThresholded;
         
         inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded); //Threshold the image
         
@@ -97,6 +98,7 @@ int main(int argc, char** argv)
         
         imshow("Thresholded Image", imgThresholded); //show the thresholded image
         imshow("Original", imgOriginal); //show the original image
+        
         
         switch (waitKey(30)) {
             case 13:
@@ -122,6 +124,7 @@ int main(int argc, char** argv)
             case 27:
             {
                 loop = false;
+//                imwrite("/Users/haocong/Desktop/frame.jpg", imgOriginal);
                 cout << "Exit Configuration." << endl;
                 break;
             }

@@ -23,7 +23,7 @@ bool descend(pair<string, double> a, pair<string, double> b) {
     return a.second > b.second;
 }
 
-int main(int argc, char** argv)
+int colorRecg(int argc, char** argv)
 {
     VideoCapture cap(1); //capture the video from web cam
     
