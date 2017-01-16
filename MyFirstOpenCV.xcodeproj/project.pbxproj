@@ -11,6 +11,7 @@
 		45294B1E1E24D688007618EC /* Calc_Stdev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45294B1C1E24D688007618EC /* Calc_Stdev.cpp */; };
 		45294B1F1E24D688007618EC /* Calc_Stdev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45294B1C1E24D688007618EC /* Calc_Stdev.cpp */; };
 		45294B211E24E963007618EC /* Capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45294B201E24E963007618EC /* Capture.cpp */; };
+		453973FF1E2B9D0F008CBB0A /* TM_Matching_Recognize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459B57A21E238971005EB34D /* TM_Matching_Recognize.cpp */; };
 		4558B8E41E200D9500A50C7A /* Color_Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4558B8E31E200D9500A50C7A /* Color_Filter.cpp */; };
 		4558B8E91E200EF400A50C7A /* calcArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4558B8CE1E20027700A50C7A /* calcArea.cpp */; };
 		4558B95E1E2013C100A50C7A /* hist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454025441E1CE99E0067F244 /* hist.cpp */; };
@@ -104,7 +105,6 @@
 		459B57A01E2381F3005EB34D /* TemplateMatching.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459B579E1E2381F3005EB34D /* TemplateMatching.cpp */; };
 		459B57A11E2381F3005EB34D /* TemplateMatching.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459B579E1E2381F3005EB34D /* TemplateMatching.cpp */; };
 		459B57A71E23B795005EB34D /* Check_Match.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459B57A51E23B691005EB34D /* Check_Match.cpp */; };
-		45B483121E276E45005683A2 /* TM_Matching_Recognize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459B57A21E238971005EB34D /* TM_Matching_Recognize.cpp */; };
 		45C50A001E22D7AB00AC457E /* SURF_Homography.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C509FF1E22D7AB00AC457E /* SURF_Homography.cpp */; };
 /* End PBXBuildFile section */
 
@@ -521,8 +521,8 @@
 				459B57A01E2381F3005EB34D /* TemplateMatching.cpp in Sources */,
 				459B57A71E23B795005EB34D /* Check_Match.cpp in Sources */,
 				45294B1E1E24D688007618EC /* Calc_Stdev.cpp in Sources */,
-				45B483121E276E45005683A2 /* TM_Matching_Recognize.cpp in Sources */,
 				4558B96A1E20177100A50C7A /* calcArea.cpp in Sources */,
+				453973FF1E2B9D0F008CBB0A /* TM_Matching_Recognize.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

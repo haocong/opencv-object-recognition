@@ -106,13 +106,13 @@ int main(int argc, char** argv)
         Vector<pair<string, double>> dists, dists_copy;
         Vector<Mat> originals;
         
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 4; i++)
         {
             originals.push_back(imgOriginal);
             pair<string, double> mostSimilar = getMostSimilar(imgOriginal, templates);
             dists.push_back(mostSimilar);
             dists_copy.push_back(mostSimilar);
-//            rotateNinety(imgOriginal, imgOriginal);
+            rotateNinety(imgOriginal, imgOriginal);
         }
         
         sort(dists.begin(), dists.end(), ascend);

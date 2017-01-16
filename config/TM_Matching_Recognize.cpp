@@ -107,12 +107,8 @@ int main(int argc, char** argv)
             break;
         }
         
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if (i > 0)
-            {
-                rotateNinety(imgOriginal, imgOriginal);
-            }
             pair<string, Vector<Point>> result = patternMatch(templates, imgOriginal, templateCounts, threshold);
             if (!result.first.empty())
             {
@@ -123,14 +119,19 @@ int main(int argc, char** argv)
                     Mat templ = templates[0].second[0];
                     rectangle(imgOriginal, *itr, Point(itr->x + templ.cols , itr->y + templ.rows), Scalar::all(255), 2, 8, 0 );
                 }
+                for(int j = 0; j < 4 - i; j++)
+                {
+                    rotateNinety(imgOriginal, imgOriginal);
+                }
                 break;
             }
+            rotateNinety(imgOriginal, imgOriginal);
         }
         
         resize(imgOriginal, imgOriginal, Size(320, (int) 320 / imgRatio));
         imshow("result", imgOriginal); //show the original image
         
-        switch (waitKey(1)) {
+        switch (waitKey(33)) {
             case 13:
             {
                 break;
@@ -138,7 +139,6 @@ int main(int argc, char** argv)
             case 27:
             {
                 loop = false;
-                cout << "Exit Recognition." << endl;
                 break;
             }
             default:

@@ -48,21 +48,26 @@ pair<string, double> getMostSimilar(Mat& img, Vector<pair<string, Vector<Mat>>>&
     int counts = (int)templates[0].second.size();
     int order = (int)sqrt(counts);
     Vector<pair<string, double>> stdevs;
+    int matchPointCounts = 0;
     
     for (auto itr = templates.begin(); itr != templates.end(); itr++)
     {
         pair<string, Vector<Mat>> side = *itr;
         Vector<Point> matchPoints;
         Vector<int> gaps;
+        
         for (int i = 0; i < counts; i += order + 1)
         {
             Point matchLoc = templMatch(img, side.second[i]);
             matchPoints.push_back(matchLoc);
         }
+        matchPointCounts = (int)matchPoints.size();
         for(auto jtr = matchPoints.begin() + 1; jtr != matchPoints.end(); jtr++)
         {
-            gaps.push_back(abs(jtr->x - (jtr - 1)->x - side.second[0].cols));
-            gaps.push_back(abs(jtr->y - (jtr - 1)->y - side.second[0].rows));
+            int rowGap = jtr->x - (jtr - 1)->x - side.second[0].cols;
+            int colGap = jtr->y - (jtr - 1)->y - side.second[0].rows;
+            gaps.push_back(abs(rowGap));
+            gaps.push_back(abs(colGap));
         }
         stdevs.push_back(make_pair(side.first, calcStdev(gaps)));
     }
@@ -130,6 +135,7 @@ bool checkMatch(Vector<Point>& points, Mat& templ, double threshold)
 //        if (!checkRowGap(rowPoints, squareSize, threshold) || !checkColGap(colPoints, squareSize, threshold))
 //            return false;
     }
-    return calcStdev(gaps) < threshold;
+    double stdev = calcStdev(gaps);
+    return stdev < threshold;
 }
 
